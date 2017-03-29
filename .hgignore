@@ -1,0 +1,9 @@
+
+syntax: regexp
+^doc$
+syntax: regexp
+^target$
+syntax: regexp
+^org\.eclipse\.papyrus\.example\.MixingMachineSimu\.javaxmi$
+syntax: regexp
+^\.(?!hgignore)
