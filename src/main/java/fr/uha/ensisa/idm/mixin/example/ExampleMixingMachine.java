@@ -1,6 +1,5 @@
 package fr.uha.ensisa.idm.mixin.example;
 
-import fr.uha.ensisa.idm.mixin.AbstractMixingMachine;
 import fr.uha.ensisa.idm.mixin.sim.svg.SVGMixingMachine;
 
 public class ExampleMixingMachine extends SVGMixingMachine {
@@ -32,8 +31,8 @@ public class ExampleMixingMachine extends SVGMixingMachine {
 
 	public static void main(String[] args) {
 		ExampleMixingMachine main = new ExampleMixingMachine();
-		for (int i = 0; i < AbstractMixingMachine.DEFAULT_INPUT_CUPS; ++i) {
-			main.setAtInputCup(i+1, AbstractMixingMachine.DEFAULT_CUP_MAX_FILL);
+		for (int i = 1; i <= main.getInputCups(); ++i) {
+			main.setAtInputCup(i, main.getCupCapacity(i));
 		}
 		main.run();
 	}

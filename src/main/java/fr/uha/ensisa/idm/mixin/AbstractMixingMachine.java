@@ -17,6 +17,8 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 	public static Set<Integer> AVAILABLE_FILTERS = Collections.unmodifiableSet(new TreeSet<>(Arrays.asList(0, 1, 2)));
 	public static Set<Integer> AVAILABLE_SHUTTERS = Collections.unmodifiableSet(new TreeSet<>(Arrays.asList(0, 1)));
 	
+	private final int inputCups, tempCups, outputCups;
+	
 	private int filter = 0;
 	private double syringeFill = 0;
 	private final double [] cupFills, cupCapacities;
@@ -32,6 +34,10 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 	}
 	
 	public AbstractMixingMachine(int inputCups, int tempCups, int outputCups, double syringeCapacity, double inputCupCapacity, double tempCupCapacity, double outputCupCapacity) {
+		this.inputCups = inputCups;
+		this.tempCups = tempCups;
+		this.outputCups = outputCups;
+		
 		this.syringeCapacity = syringeCapacity;
 		
 		this.cupFills = new double[inputCups+2+tempCups+outputCups];
@@ -58,6 +64,18 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 		this.drainPosition = inputCups+2;
 		
 		this.syringeAtCup = inputCups+1;
+	}
+	
+	protected int getInputCups() {
+		return this.inputCups;
+	}
+
+	protected int getTempCups() {
+		return tempCups;
+	}
+
+	protected int getOutputCups() {
+		return outputCups;
 	}
 
 	protected double getSyringeCapacity() {

@@ -1,8 +1,12 @@
 package fr.uha.ensisa.idm.mixin;
 
-import static org.junit.Assert.*;
-
-import static fr.uha.ensisa.idm.mixin.AbstractMixingMachine.*;
+import static fr.uha.ensisa.idm.mixin.AbstractMixingMachine.DEFAULT_CUP_MAX_FILL;
+import static fr.uha.ensisa.idm.mixin.AbstractMixingMachine.DEFAULT_INPUT_CUPS;
+import static fr.uha.ensisa.idm.mixin.AbstractMixingMachine.DEFAULT_SYRINGE_MAX_FILL;
+import static fr.uha.ensisa.idm.mixin.AbstractMixingMachine.DEFAULT_TEMP_CUPS;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;

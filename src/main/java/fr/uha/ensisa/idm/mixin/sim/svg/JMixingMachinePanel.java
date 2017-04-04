@@ -6,10 +6,6 @@ import javax.swing.JFrame;
 
 import org.apache.batik.swing.JSVGCanvas;
 
-import fr.uha.ensisa.idm.mixin.sim.utils.AnimableValue;
-import fr.uha.ensisa.idm.mixin.sim.utils.AnimationListener;
-import fr.uha.ensisa.idm.mixin.sim.utils.ListenableValue;
-
 public class JMixingMachinePanel extends JSVGCanvas {
 
 	protected final SVGMixingMachineDocument document;

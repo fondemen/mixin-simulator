@@ -20,12 +20,10 @@ import org.w3c.dom.svg.SVGElement;
 import org.w3c.dom.svg.SVGGElement;
 import org.w3c.dom.svg.SVGLocatable;
 import org.w3c.dom.svg.SVGMetadataElement;
-import org.w3c.dom.svg.SVGPathElement;
 import org.w3c.dom.svg.SVGRect;
 import org.w3c.dom.svg.SVGRectElement;
 import org.w3c.dom.svg.SVGSVGElement;
 import org.w3c.dom.svg.SVGStylable;
-import org.w3c.dom.svg.SVGTSpanElement;
 import org.w3c.dom.svg.SVGTextPositioningElement;
 
 import fr.uha.ensisa.idm.mixin.AbstractMixingMachine;
