@@ -170,6 +170,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 			super.setAtInputCup(cup, quantity);
 			this.document.setCupFill(cup, getCupFilll(cup)/getCupCapacity(cup), PRODUCT_COLOR);
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while setting " + quantity + " to cup " + quantity);
 			this.document.boom(x.getMessage());
 			throw x;
 		}
@@ -180,6 +181,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 		try {
 			super.move(offset);
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while moving " + offset);
 			this.document.boom(x.getMessage());
 			throw x;
 		}
@@ -190,6 +192,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 		try {
 			return super.scan();
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while scanning");
 			this.document.boom(x.getMessage());
 			throw x;
 		}
@@ -200,6 +203,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 		try {
 			super.suck(amount);
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while sucking " + amount);
 			this.document.boom(x.getMessage());
 			throw x;
 		}
@@ -210,6 +214,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 		try {
 			super.open(shutter);
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while opening " + shutter);
 			this.document.boom(x.getMessage());
 			throw x;
 		}
@@ -220,6 +225,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 		try {
 			super.shut(shutter);
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while shutting " + shutter);
 			this.document.boom(x.getMessage());
 			throw x;
 		}
@@ -230,6 +236,7 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 		try {
 			super.wait(time);
 		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while waiting " + time);
 			this.document.boom(x.getMessage());
 			throw x;
 		}
