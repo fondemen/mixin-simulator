@@ -8,31 +8,35 @@ public class ExampleMixingMachine extends SVGMixingMachine {
 		open(0);
 		move(-1);
 		filt(1);
-		suck(5);
-		wait(1);
-		suck(5);
+		double i = scan();
+		suck(i);
 		move(3);
+		blow(i);
+		move(-4);
+		double j = scan();
+		suck(j);
+		move(4);
 		shut(0);
 		filt(2);
-		blow(10);
+		blow(j);
 		wait(3);
-		suck(10);
+		suck(i+j);
 		filt(0);
 		open(1);
 		move(5);
-		blow(10);
+		blow(i+j);
 		move(-7);
 		shut(1);
 		suck(30);
 		move(1);
 		blow(30);
-		move(-2);
+		// move(-2); // triggers an exception: shutter is closed
 	}
 
 	public static void main(String[] args) {
 		ExampleMixingMachine main = new ExampleMixingMachine();
 		for (int i = 1; i <= main.getInputCups(); ++i) {
-			main.setAtInputCup(i, main.getCupCapacity(i));
+			main.setAtInputCup(i, main.getCupCapacity(i)/2);
 		}
 		main.run();
 	}
