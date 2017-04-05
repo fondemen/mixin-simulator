@@ -163,24 +163,24 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 		});
 	}
 
-	public void fillSyringe(double syringeRatio, int cup, double cupRatio, String color) {
+	public void fillSyringe(double syringeRatio, int cup, double cupRatio, String syringeColor, String cupColor) {
 		
-		if (this.syringeBt != null && syringeRatio > 0) {
+		if (syringeColor != null && this.syringeBt != null && syringeRatio > 0) {
 			this.doUpdate(new Runnable() {
 				
 				@Override
 				public void run() {
-					((SVGStylable)syringeBt).getStyle().setProperty("fill", color, "");
+					((SVGStylable)syringeBt).getStyle().setProperty("fill", syringeColor, "");
 				}
 			}); 
 		}
 		
-		if (this.cupsBt[cup-1] != null && cupRatio > 0) {
+		if (cupColor != null && this.cupsBt[cup-1] != null && cupRatio > 0) {
 			this.doUpdate(new Runnable() {
 				
 				@Override
 				public void run() {
-					((SVGStylable)cupsBt[cup-1]).getStyle().setProperty("fill", color, "");
+					((SVGStylable)cupsBt[cup-1]).getStyle().setProperty("fill", cupColor, "");
 				}
 			}); 
 		}
@@ -192,8 +192,8 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 			
 			@Override
 			public void run() {
-				((SVGStylable)syringeBk).getStyle().setProperty("fill", color, "");
-				if (cupsBk[cup-1] != null) ((SVGStylable)cupsBk[cup-1]).getStyle().setProperty("fill", color, "");
+				if (syringeColor != null) ((SVGStylable)syringeBk).getStyle().setProperty("fill", syringeColor, "");
+				if (cupColor != null && cupsBk[cup-1] != null) ((SVGStylable)cupsBk[cup-1]).getStyle().setProperty("fill", cupColor, "");
 			}
 		});
 		

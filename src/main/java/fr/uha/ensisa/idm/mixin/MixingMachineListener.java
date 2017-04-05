@@ -6,10 +6,10 @@ public interface MixingMachineListener {
 	void syringeMoved(int initialCup, int currentCup);
 	void filterSetting(int filter);
 	void filterSet(int filter);
-	void suckingCup(double amount, int cup, double cupContentBefore, double syringueFillBefore);
-	void suckedCup(double amount, int cup, double cupContentAfter, double syringueFillAfter);
-	void blowingCup(double amount, int cup, double cupContentBefore, double syringueFillBefore);
-	void blowedCup(double amount, int cup, double cupContentAfter, double syringueFillAfter);
+	void suckingCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringueFillBefore, double syringeContentAfter);
+	void suckedCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringeContentBefire, double syringueFillAfter);
+	void blowingCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringueFillBefore, double syringeContenteAfter);
+	void blownCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringeContenteBefore, double syringueFillAfter);
 	void openingLeftShutter();
 	void openedLeftShutter();
 	void openingRightShutter();

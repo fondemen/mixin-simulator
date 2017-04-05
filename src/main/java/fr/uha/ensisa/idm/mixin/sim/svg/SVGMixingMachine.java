@@ -1,24 +1,33 @@
 package fr.uha.ensisa.idm.mixin.sim.svg;
 
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 
 import fr.uha.ensisa.idm.mixin.AbstractMixingMachine;
 import fr.uha.ensisa.idm.mixin.MixingMachineListener;
+import fr.uha.ensisa.idm.mixin.sim.utils.ColorUtil;
 
 public class SVGMixingMachine extends AbstractMixingMachine {
 
-	private static final String PRODUCT_COLOR = "purple";
-	private static final String CLEANING_COLOR = "lightblue";
+	private static final Color CLEANING_COLOR = new Color(173, 216, 230); // lightblue or #ADD8E6
 	
 	private MixingMachineListener listener;
 	private SVGMixingMachineDocument document;
 	private JMixingMachineFrame frame;
 	
-	private String syringeColor = null;
+	private Color syringeColor = null;
+	private Color[] cupsColor;
 
 	public SVGMixingMachine() {
 		super();
+		this.cupsColor = new Color[getInputCups() + 2 + getTempCups() + getOutputCups()];
+		int i = 0;
+		for (; i < getInputCups(); ++i) {
+			this.cupsColor[i] = Color.getHSBColor(ColorUtil.generateHueForId(i), 1, 1);
+		}
+		this.cupsColor[i] = CLEANING_COLOR;
 		this.setupFrame();
 	}
 
@@ -68,16 +77,16 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 				}
 				
 				@Override
-				public void suckingCup(double amount, int cup, double cupContentBefore, double syringueFillBefore) {
+				public void suckingCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringueFillBefore, double syringeContentAfter) {
 					frame.showStatus("Sucking " + amount + " from cup " + cup);
 					document.moveSyringeUp(false);
 				}
 				
 				@Override
-				public void suckedCup(double amount, int cup, double cupContentAfter, double syringueFillAfter) {
+				public void suckedCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringeContentBefore, double syringueFillAfter) {
 					frame.showStatus("Sucked " + amount + " from cup " + cup);
-					syringeColor = cupContentAfter == -1 ? CLEANING_COLOR : PRODUCT_COLOR;
-					document.fillSyringe(syringueFillAfter / getSyringeCapacity(), cup, cupContentAfter / getCupCapacity(cup), syringeColor);
+					syringeColor = ColorUtil.mix(syringeColor, syringeContentBefore, cupsColor[cup-1], cupContentBefore-cupContentAfter);
+					document.fillSyringe(syringueFillAfter / getSyringeCapacity(), cup, cupContentAfter / getCupCapacity(cup), ColorUtil.colorToHtmlString(syringeColor), ColorUtil.colorToHtmlString(cupsColor[cup-1]));
 					document.moveSyringeUp(true);
 				}
 				
@@ -138,14 +147,16 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 				}
 				
 				@Override
-				public void blowingCup(double amount, int cup, double cupContentBefore, double syringueFillBefore) {
+				public void blowingCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringueFillBefore, double syringeContenteAfter) {
 					frame.showStatus("Blowing " + amount + " to cup " + cup);
 					document.moveSyringeUp(false);
 				}
 				
 				@Override
-				public void blowedCup(double amount, int cup, double cupContentAfter, double syringueFillAfter) {
-					document.fillSyringe(syringueFillAfter / getSyringeCapacity(), cup, cupContentAfter / getCupCapacity(cup), syringeColor);
+				public void blownCup(double amount, int cup, double cupContentBefore, double cupContentAfter, double syringeContenteBefore, double syringueFillAfter) {
+					cupsColor[cup-1] = cupsColor[cup-1] == null ? syringeColor : ColorUtil.mix(syringeColor, cupContentAfter-cupContentBefore, cupsColor[cup-1], cupContentBefore);
+					
+					document.fillSyringe(syringueFillAfter / getSyringeCapacity(), cup, cupContentAfter / getCupCapacity(cup), ColorUtil.colorToHtmlString(syringeColor), ColorUtil.colorToHtmlString(cupsColor[cup-1]));
 					frame.showStatus("Blown " + amount + " to cup " + cup);
 					document.moveSyringeUp(true);
 				}
@@ -168,7 +179,8 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 	public void setAtInputCup(int cup, double quantity) {
 		try {
 			super.setAtInputCup(cup, quantity);
-			this.document.setCupFill(cup, getCupFilll(cup)/getCupCapacity(cup), PRODUCT_COLOR);
+			assert this.cupsColor[cup-1] != null; // Initialized
+			this.document.setCupFill(cup, getCupFilll(cup)/getCupCapacity(cup), ColorUtil.colorToHtmlString(this.cupsColor[cup-1]));
 		} catch (RuntimeException x) {
 			this.frame.showStatus("ERROR while setting " + quantity + " to cup " + quantity);
 			this.document.boom(x.getMessage());

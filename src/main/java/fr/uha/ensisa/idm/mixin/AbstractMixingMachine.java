@@ -191,10 +191,16 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 				throw new IllegalArgumentException("Not enough product in cup " + this.syringeAtCup + ": requested " + amount + " while " + cupContent + " is available");
 			}
 		}
-		this.listeners.forEach(l -> l.suckingCup(amount, this.syringeAtCup, fromCleaningFluid ? -1 : this.getContentAtCup(this.syringeAtCup), this.syringeFill));
+
+		double cupBefore = fromCleaningFluid ? -1 : this.getContentAtCup(this.syringeAtCup);
+		double cupAfter = fromCleaningFluid ? -1 : cupBefore - amount;
+		double syringeBefore = this.syringeFill;
+		double syringeAfter = this.syringeFill + amount;
+		
+		this.listeners.forEach(l -> l.suckingCup(amount, this.syringeAtCup, cupBefore, cupAfter, syringeBefore, syringeAfter));
 		if (!fromCleaningFluid) this.cupFills[this.syringeAtCup-1] -= amount;
 		this.syringeFill += amount;
-		this.listeners.forEach(l -> l.suckedCup(amount, this.syringeAtCup, fromCleaningFluid ? -1 : this.getContentAtCup(this.syringeAtCup), this.syringeFill));
+		this.listeners.forEach(l -> l.suckedCup(amount, this.syringeAtCup, cupBefore, cupAfter, syringeBefore, syringeAfter));
 	}
 
 	public void blow(double amount) {
@@ -210,10 +216,15 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 			}
 		}
 
-		this.listeners.forEach(l -> l.blowingCup(amount, this.syringeAtCup, toDrain ? -1 : this.getContentAtCup(this.syringeAtCup), this.syringeFill));
+		double cupBefore = toDrain ? -1 : this.getContentAtCup(this.syringeAtCup);
+		double cupAfter = toDrain ? -1 : cupBefore + amount;
+		double syringeBefore = this.syringeFill;
+		double syringeAfter = this.syringeFill - amount;
+
+		this.listeners.forEach(l -> l.blowingCup(amount, this.syringeAtCup, cupBefore, cupAfter, syringeBefore, syringeAfter));
 		if (!toDrain) this.cupFills[this.syringeAtCup-1] += amount;
 		this.syringeFill -= amount;
-		this.listeners.forEach(l -> l.blowedCup(amount, this.syringeAtCup, toDrain ? -1 : this.getContentAtCup(this.syringeAtCup), this.syringeFill));
+		this.listeners.forEach(l -> l.blownCup(amount, this.syringeAtCup, cupBefore, cupAfter, syringeBefore, syringeAfter));
 	}
 
 	public void open(int shutter) {
