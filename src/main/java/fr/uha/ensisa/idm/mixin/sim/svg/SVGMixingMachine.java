@@ -211,6 +211,28 @@ public class SVGMixingMachine extends AbstractMixingMachine {
 	}
 
 	@Override
+	public void filt(int filter) {
+		try {
+			super.filt(filter);
+		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while selecting filter " + filter);
+			this.document.boom(x.getMessage());
+			throw x;
+		}
+	}
+
+	@Override
+	public void blow(double amount) {
+		try {
+			super.blow(amount);
+		} catch (RuntimeException x) {
+			this.frame.showStatus("ERROR while blowing " + amount);
+			this.document.boom(x.getMessage());
+			throw x;
+		}
+	}
+
+	@Override
 	public void suck(double amount) {
 		try {
 			super.suck(amount);
