@@ -10,7 +10,7 @@ public class ColorUtil {
 		if (c2 == null || quantity2 <= 0) return c1;
 		
 		double[] rgb = Arrays.asList(new int[]{c1.getRed(), c2.getRed()}, new int[]{c1.getGreen(), c2.getGreen()}, new int[]{c1.getBlue(), c2.getBlue()}).stream()
-				.mapToDouble(comp -> ((comp[0] * quantity1 / 255.0f + comp[1] * quantity2 / 255.0f) / (quantity1 + quantity2)))
+				.mapToDouble(comp -> ((comp[0] * quantity1 + comp[1] * quantity2) / (255.0f * (quantity1 + quantity2))))
 				.toArray();
 		
 		return new Color((float)rgb[0], (float)rgb[1], (float)rgb[2]);
