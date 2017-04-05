@@ -1,6 +1,7 @@
 package fr.uha.ensisa.idm.mixin.sim.utils;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 public class ColorUtil {
 	
@@ -8,29 +9,23 @@ public class ColorUtil {
 		if (c1 == null || quantity1 <= 0) return c2;
 		if (c2 == null || quantity2 <= 0) return c1;
 		
-		float r = (float) ((c1.getRed() * quantity1 / 255.0f + c2.getRed() * quantity2 / 255.0f) / (quantity1 + quantity2));
-		assert r >= 0 && r <= 1;
-		float g = (float) ((c1.getGreen() * quantity1 / 255.0f + c2.getGreen() * quantity2 / 255.0f) / (quantity1 + quantity2));
-		assert g >= 0 && g<= 1;
-		float b = (float) ((c1.getBlue() * quantity1 / 255.0f + c2.getBlue() * quantity2 / 255.0f) / (quantity1 + quantity2));
-		assert b >= 0 && b<= 1;
+		double[] rgb = Arrays.asList(new int[]{c1.getRed(), c2.getRed()}, new int[]{c1.getGreen(), c2.getGreen()}, new int[]{c1.getBlue(), c2.getBlue()}).stream()
+				.mapToDouble(comp -> ((comp[0] * quantity1 / 255.0f + comp[1] * quantity2 / 255.0f) / (quantity1 + quantity2)))
+				.toArray();
 		
-		return new Color(r, g, b);
+		return new Color((float)rgb[0], (float)rgb[1], (float)rgb[2]);
 	}
 
 	public static String colorToHtmlString(Color c) {
 		if (c == null) return null;
 		
-		String rsStr = Integer.toHexString(c.getRed()).toUpperCase();
-		while (rsStr.length() < 2)
-			rsStr = "0" + rsStr;
-		String gsStr = Integer.toHexString(c.getGreen()).toUpperCase();
-		while (gsStr.length() < 2)
-			gsStr = "0" + gsStr;
-		String bsStr = Integer.toHexString(c.getBlue()).toUpperCase();
-		while (bsStr.length() < 2)
-			bsStr = "0" + bsStr;
-		return "#" + rsStr + gsStr + bsStr;
+		return "#" + Arrays.asList(c.getRed(), c.getGreen(), c.getBlue()).stream().map(comp -> {
+			String str = Integer.toHexString(comp).toUpperCase();
+			while (str.length() < 2) {
+				str = "0" + str;
+			}
+			return str;
+		}).reduce((s1, s2) -> s1 + s2).get();
 	}
 
 	public static float generateHueForId(int id) {
