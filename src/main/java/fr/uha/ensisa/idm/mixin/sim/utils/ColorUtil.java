@@ -19,13 +19,7 @@ public class ColorUtil {
 	public static String colorToHtmlString(Color c) {
 		if (c == null) return null;
 		
-		return "#" + Arrays.asList(c.getRed(), c.getGreen(), c.getBlue()).stream().map(comp -> {
-			String str = Integer.toHexString(comp).toUpperCase();
-			while (str.length() < 2) {
-				str = "0" + str;
-			}
-			return str;
-		}).reduce((s1, s2) -> s1 + s2).get();
+		return "#" + Arrays.asList(c.getRed(), c.getGreen(), c.getBlue()).stream().map(comp -> String.format("%02X", comp)).reduce((s1, s2) -> s1 + s2).get();
 	}
 
 	public static float generateHueForId(int id) {
