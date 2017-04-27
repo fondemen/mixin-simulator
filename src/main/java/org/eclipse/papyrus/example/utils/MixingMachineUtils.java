@@ -112,11 +112,11 @@ public class MixingMachineUtils {
 		machine.move(offset);
 	}
 	
-	public double scan() {
+	public static double scan() {
 		return machine.scan();
 	}
 
-	public void wait(int time) {
+	public static void wait(int time) {
 		machine.wait(time);
 	}
 }
