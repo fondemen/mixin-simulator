@@ -11,7 +11,7 @@ import fr.uha.ensisa.idm.mixin.sim.svg.SVGMixingMachine;
 public class MixingMachineUtils {
 	
 	private static SVGMixingMachine machine;
-	
+
 	static {
 		machine = new SVGMixingMachine();
 		for (int i = 0; i < AbstractMixingMachine.DEFAULT_INPUT_CUPS; ++i) {
@@ -110,5 +110,13 @@ public class MixingMachineUtils {
 	 */
 	public static void move(Integer offset) {
 		machine.move(offset);
+	}
+	
+	public double scan() {
+		return machine.scan();
+	}
+
+	public void wait(int time) {
+		machine.wait(time);
 	}
 }
