@@ -2,6 +2,8 @@ package fr.uha.ensisa.idm.mixin.sim.svg;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.StringTokenizer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -42,14 +44,17 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 			name += ".svg";
 		}
 
-		File file = new File(SVGMixingMachineDocument.class.getClassLoader().getResource(name).getFile());
-		if (!file.exists() || !file.canRead()) {
-			throw new IOException("Cannot find file " + name);
+		URI uri;
+		try {
+			uri = SVGMixingMachineDocument.class.getClassLoader().getResource(name).toURI();
+		} catch (URISyntaxException e) {
+			throw new IOException(e);
 		}
+		System.out.println(name + " -> " + uri);
 
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-		return f.createSVGDocument(file.toURI().toString());
+		return f.createSVGDocument(uri.toString());
 	}
 
 	private final int inputCups, tempCups, outputCups;

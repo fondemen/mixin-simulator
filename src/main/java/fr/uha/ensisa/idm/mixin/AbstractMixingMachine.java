@@ -12,7 +12,7 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 	public static int DEFAULT_TEMP_CUPS = 5;
 	public static int DEFAULT_OUTPUT_CUPS = 1;
 	public static double DEFAULT_SYRINGE_MAX_FILL = 30;
-	public static double DEFAULT_CUP_MAX_FILL = 10;
+	public static double DEFAULT_CUP_MAX_FILL = 18;
 
 	public static Set<Integer> AVAILABLE_FILTERS = Collections.unmodifiableSet(new TreeSet<>(Arrays.asList(0, 1, 2)));
 	public static Set<Integer> AVAILABLE_SHUTTERS = Collections.unmodifiableSet(new TreeSet<>(Arrays.asList(0, 1)));
