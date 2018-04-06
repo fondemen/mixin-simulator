@@ -155,14 +155,14 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 	}
 
 	public void setSyringeAtCup(int cup) {
-		animate(this.syringePosition, cup, (long)(1000*Math.abs(cup-this.syringePosition)), value -> {
+		animate(this.syringePosition, cup, (long)(500*Math.abs(cup-this.syringePosition)), value -> {
 			setSyringeAtCupInt(value.doubleValue(), 1);
 			return null;
 		});
 	}
 
 	public void moveSyringeUp(boolean up) {
-		animate(up ? 0.0d : 1.0d, up ? 1.0d : 0.0d, 1000, value -> {
+		animate(up ? 0.0d : 1.0d, up ? 1.0d : 0.0d, 500, value -> {
 			setSyringeAtCupInt(this.syringePosition, value);
 			return null;
 		});
@@ -202,7 +202,7 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 			}
 		});
 		
-		long time = (long)(3000*Math.abs(newHeight-currentHeight)/getSyringeCapacity());
+		long time = (long)(2000*Math.abs(newHeight-currentHeight)/getSyringeCapacity());
 		
 		if (this.cupsBk[cup-1] != null) {
 			
