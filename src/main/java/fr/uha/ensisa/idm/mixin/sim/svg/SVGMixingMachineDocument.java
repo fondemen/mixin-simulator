@@ -1,6 +1,5 @@
 package fr.uha.ensisa.idm.mixin.sim.svg;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -385,7 +384,7 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 			this.syringeBk.setAttributeNS(null, "height", "0.0");
 			//((SVGStylable)this.syringeBt).getStyle().setProperty("fill", "white", ""); // no as document is not rendered yet
 			setStyleAtt(syringeBt, "fill", "white");
-			setSyringeAtCupInt(inputCups + 1, 1);
+			setSyringeAtCupInt(inputCups + 2, 1);
 		}
 	}
 

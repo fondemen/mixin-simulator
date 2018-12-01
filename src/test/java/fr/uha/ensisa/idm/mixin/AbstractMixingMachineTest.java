@@ -94,7 +94,7 @@ public class AbstractMixingMachineTest {
 		final double quantity = DEFAULT_CUP_MAX_FILL/3;
 		sut.setAtInputCup(1, quantity);
 		sut.open(0);
-		sut.move(-DEFAULT_INPUT_CUPS);
+		sut.move(-DEFAULT_INPUT_CUPS-1);
 		assertEquals(quantity, sut.scan(), 0.0001);
 	}
 	
@@ -103,14 +103,14 @@ public class AbstractMixingMachineTest {
 		final double quantity = DEFAULT_CUP_MAX_FILL/4;
 		sut.setAtInputCup(DEFAULT_INPUT_CUPS, quantity);
 		sut.open(0);
-		sut.move(-1);
+		sut.move(-2);
 		assertEquals(quantity, sut.scan(), 0.0001);
 	}
 	
 	@Test(expected=Exception.class)
 	public void moveBackThroughLeftShutter() {
 		sut.open(0);
-		sut.move(-1);
+		sut.move(-2);
 		sut.shut(0);
 		sut.move(1);
 	}
@@ -118,7 +118,7 @@ public class AbstractMixingMachineTest {
 	@Test(expected=Exception.class)
 	public void moveTooFarLeft() {
 		sut.open(0);
-		sut.move(-DEFAULT_INPUT_CUPS-1);
+		sut.move(-DEFAULT_INPUT_CUPS-2);
 	}
 	
 	@Test(expected=Exception.class)
@@ -149,7 +149,7 @@ public class AbstractMixingMachineTest {
 		final double quantity = DEFAULT_CUP_MAX_FILL*2/5;
 		sut.setAtInputCup(DEFAULT_INPUT_CUPS, quantity);
 		sut.open(0);
-		sut.move(-1);
+		sut.move(-2);
 		sut.suck(quantity);
 		sut.open(1);
 		sut.move(2+DEFAULT_TEMP_CUPS+1);
@@ -169,6 +169,7 @@ public class AbstractMixingMachineTest {
 	public void cleaningSyringeTriggersNoOverflow() {
 		double sucked = 0;
 		while (sucked < DEFAULT_CUP_MAX_FILL) {
+			sut.move(-1);
 			sut.suck(DEFAULT_SYRINGE_MAX_FILL);
 			sut.move(1);
 			sut.blow(DEFAULT_SYRINGE_MAX_FILL);
@@ -193,7 +194,7 @@ public class AbstractMixingMachineTest {
 	public void syringeBelowOverflow() {
 		int turns = (int)Math.floor(DEFAULT_SYRINGE_MAX_FILL/DEFAULT_CUP_MAX_FILL);
 		sut.open(0);
-		sut.move(-DEFAULT_INPUT_CUPS);
+		sut.move(-DEFAULT_INPUT_CUPS-1);
 		for (int i = 0; i < turns; ++i) {
 			sut.setAtInputCup(1, DEFAULT_CUP_MAX_FILL);
 			sut.suck(DEFAULT_CUP_MAX_FILL);

@@ -63,7 +63,7 @@ public class AbstractMixingMachine implements ListenableMixingMachine {
 		this.cleaningFluidPosition = inputCups+1;
 		this.drainPosition = inputCups+2;
 		
-		this.syringeAtCup = inputCups+1;
+		this.syringeAtCup = inputCups+2;
 	}
 	
 	protected int getInputCups() {

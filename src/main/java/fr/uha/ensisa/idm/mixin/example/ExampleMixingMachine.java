@@ -8,7 +8,7 @@ public class ExampleMixingMachine extends SVGMixingMachine {
 		
 		double i,j;
 		open(0);
-		move(-3);
+		move(-4);
 		if(scan()!=9) return -1;
 		suck(9);move(5);blow(9);
 		move(-2);suck(30);move(1);blow(30);

@@ -3,7 +3,6 @@ package fr.uha.ensisa.idm.mixin.sim.svg;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 
 import fr.uha.ensisa.idm.mixin.AbstractMixingMachine;
 import fr.uha.ensisa.idm.mixin.MixingMachineListener;

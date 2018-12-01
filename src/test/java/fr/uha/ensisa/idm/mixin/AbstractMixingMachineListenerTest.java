@@ -128,8 +128,8 @@ public class AbstractMixingMachineListenerTest {
 		
 		sut.move(1);
 
-		inOrder.verify(listener).syringeMoving(4, 5);
-		inOrder.verify(listener).syringeMoved(4, 5);
+		inOrder.verify(listener).syringeMoving(5, 6);
+		inOrder.verify(listener).syringeMoved(5, 6);
 	}
 	
 	@Test
@@ -142,14 +142,14 @@ public class AbstractMixingMachineListenerTest {
 				pos[0] = sut.getSyringePosition();
 				return null;
 			}
-		}).when(listener).syringeMoving(4, 5);
+		}).when(listener).syringeMoving(5, 6);
 		
 		sut.move(1);
 		
-		assertEquals(4, pos[0]);
+		assertEquals(5, pos[0]);
 
-		inOrder.verify(listener).syringeMoving(4, 5);
-		inOrder.verify(listener).syringeMoved(4, 5);
+		inOrder.verify(listener).syringeMoving(5, 6);
+		inOrder.verify(listener).syringeMoved(5, 6);
 	}
 	
 	@Test
@@ -162,14 +162,14 @@ public class AbstractMixingMachineListenerTest {
 				pos[0] = sut.getSyringePosition();
 				return null;
 			}
-		}).when(listener).syringeMoved(4, 5);
+		}).when(listener).syringeMoved(5, 6);
 		
 		sut.move(1);
 		
-		assertEquals(5, pos[0]);
+		assertEquals(6, pos[0]);
 
-		inOrder.verify(listener).syringeMoving(4, 5);
-		inOrder.verify(listener).syringeMoved(4, 5);
+		inOrder.verify(listener).syringeMoving(5, 6);
+		inOrder.verify(listener).syringeMoved(5, 6);
 	}
 	
 	@Test
