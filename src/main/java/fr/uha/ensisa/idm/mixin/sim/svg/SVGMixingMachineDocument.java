@@ -12,6 +12,7 @@ import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -88,7 +89,8 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 		SVGSVGElement machineRoot = load("machine").getRootElement();
 		NamedNodeMap machineAtts = machineRoot.getAttributes();
 		for (int i = 0; i < machineAtts.getLength(); ++i) {
-			this.doc.getRootElement().setAttributeNodeNS((Attr) machineAtts.item(i));
+			Attr att = (Attr) machineAtts.item(i);
+			this.doc.getRootElement().setAttributeNodeNS(att);
 		}
 
 		this.defs = (SVGDefsElement) this.doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "defs");
@@ -300,10 +302,18 @@ public class SVGMixingMachineDocument extends AbstractMixingMachine {
 
 	protected void shutterAction(final SVGElement shutter, final boolean open) {
 		final double height = ((SVGLocatable) shutter).getBBox().getHeight();
+		final double width = ((SVGLocatable) shutter).getBBox().getWidth();
+		final double x = ((SVGLocatable) shutter).getBBox().getX();
+		final double y = ((SVGLocatable) shutter).getBBox().getY();
+		
 		animate(open ? 0.0d : height, open ? height : 0.0d, 1000, value -> {
 			shutter.setAttributeNS(null, "transform", "translate(0, " + value + ")");
 			return null;
 		});
+//		animate(open ? 0.0d : -90.0d, open ? -90.0d : 0.0d, 1000, value -> {
+//			shutter.setAttributeNS(null, "transform", "rotate(" + value +  ", " + (x+width) +", " + (y+height) + ")");
+//			return null;
+//		});
 	}
 	
 	protected <T extends Number> void animate(T from, T to, long speed, final Function<T, Void> fun) {

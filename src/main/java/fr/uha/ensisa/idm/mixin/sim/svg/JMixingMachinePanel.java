@@ -10,12 +10,13 @@ public class JMixingMachinePanel extends JSVGCanvas {
 
 	protected final SVGMixingMachineDocument document;
 
-	public JMixingMachinePanel(SVGMixingMachineDocument doc) {
+	public JMixingMachinePanel(final SVGMixingMachineDocument doc) {
+		this.setRecenterOnResize(true);
 		this.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 		this.setDocument(doc.getDocument());
 		this.document = doc;
-		this.waitForSVGDocument();
-		doc.setUpdator(new BatikRunnableQueueDocumentUpdator(this));
+		waitForSVGDocument();
+		doc.setUpdator(new BatikRunnableQueueDocumentUpdator(JMixingMachinePanel.this));
 	}
 
 	public JFrame getFrame() {
@@ -33,7 +34,7 @@ public class JMixingMachinePanel extends JSVGCanvas {
 	private void waitForSVGDocument() {
 		while (this.getUpdateManager() == null) {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
 		}

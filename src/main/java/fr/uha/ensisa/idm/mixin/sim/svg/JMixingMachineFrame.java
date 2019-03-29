@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import org.apache.batik.swing.JSVGScrollPane;
 import org.w3c.dom.svg.SVGSVGElement;
 
 public class JMixingMachineFrame extends JFrame {
@@ -41,11 +42,8 @@ public class JMixingMachineFrame extends JFrame {
 		
 		this.getContentPane().setLayout(new BorderLayout());
 		
-		JScrollPane scroll = new JScrollPane();
-		scroll.getViewport().add(this.liftPanel);
+		JSVGScrollPane scroll = new JSVGScrollPane(this.liftPanel);
 		this.getContentPane().add(scroll, BorderLayout.CENTER);
-		SVGSVGElement root = doc.getDocument().getRootElement();
-		scroll.setPreferredSize(new Dimension(10+(int)Math.ceil(Double.parseDouble(root.getAttribute("width"))), 10+(int)Math.ceil(Double.parseDouble(root.getAttribute("height")))));
 		
 		this.getContentPane().add(this.status, BorderLayout.SOUTH);
 		
